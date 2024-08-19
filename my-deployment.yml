@@ -1,0 +1,37 @@
+---
+Kind : Deployment
+apiversion : apps/v1
+metadata : 
+  Name : my-deployment
+spec :
+  replicas : 2
+  strategy : 
+    type : Recreate 
+  selector : 
+    matchlables :
+    app : my-app
+  template :
+    metadata :
+      name : my-pod
+      label : 
+        app : my-app
+    spec :
+      containers : 
+      -image : akdochub/myiamge
+      name : mycontainer 
+      ports : 
+      -containerport : 8501
+...
+---
+kind : service
+apiversion : v1 
+metadata : 
+  name : my-service
+spec :
+  type : NodePort
+  selector : 
+    app : my-app
+  ports :
+    -port : 80
+    targetport : 8501
+    NodePort : 30001 
